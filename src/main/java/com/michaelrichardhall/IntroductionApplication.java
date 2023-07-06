@@ -1,5 +1,6 @@
 package com.michaelrichardhall;
 
+import com.michaelrichardhall.configuration.ApplicationHealthCheck;
 import com.michaelrichardhall.configuration.BasicConfiguration;
 import com.michaelrichardhall.core.Brand;
 import com.michaelrichardhall.repository.BrandRepository;
@@ -26,6 +27,10 @@ public class IntroductionApplication extends Application<BasicConfiguration> {
         environment
                 .jersey()
                 .register(brandResource);
+
+        environment
+                .healthChecks()
+                .register("application", new ApplicationHealthCheck());
     }
 
     @Override
