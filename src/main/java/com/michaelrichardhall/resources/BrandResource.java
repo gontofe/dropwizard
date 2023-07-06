@@ -2,12 +2,10 @@ package com.michaelrichardhall.resources;
 
 import com.michaelrichardhall.core.Brand;
 import com.michaelrichardhall.repository.BrandRepository;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.List;
 import java.util.Optional;
 
 @Path("/brands")
@@ -24,6 +22,14 @@ public class BrandResource {
 
     @GET
     public List<Brand> getBrands(@QueryParam("size") Optional<Integer> size) {
-        return brandRepository.findAll(size.orElse())
+        return brandRepository.findAll(size.orElse(defaultSize));
+    }
+
+    @GET
+    @Path("/{id}")
+    public Brand getById(@PathParam("id") Long id) {
+        return brandRepository
+                .findById(id)
+                .orElseThrow(RuntimeException::new);
     }
 }
